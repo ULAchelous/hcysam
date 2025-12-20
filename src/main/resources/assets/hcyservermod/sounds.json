@@ -1,0 +1,56 @@
+{
+  "voice_xy_1": {
+    "subtitle": "subtitle.hcyservermod.voice_xy_1",
+    "sounds": [
+      {
+        "name": "hcyservermod:voice_xy_1",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "voice_xy_2": {
+    "subtitle": "subtitle.hcyservermod.voice_xy_2",
+    "sounds": [
+      {
+        "name": "hcyservermod:voice_xy_2",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "voice_xy_3": {
+    "subtitle": "subtitle.hcyservermod.voice_xy_3",
+    "sounds": [
+      {
+        "name": "hcyservermod:voice_xy_3",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  },
+  "voice_title": {
+    "sounds": [
+      {
+        "name": "hcyservermod:voice_title_1",
+        "volume": 1.0,
+        "pitch": 1.0
+      },
+      {
+        "name": "hcyservermod:voice_title_2",
+        "volume": 1.0,
+        "pitch": 1.0
+      },
+      {
+        "name": "hcyservermod:voice_title_3",
+        "volume": 1.0,
+        "pitch": 1.0
+      },
+      {
+        "name": "hcyservermod:voice_title_4",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  }
+}

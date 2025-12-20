@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "hcyservermod:block/lottery_block_model" }
+  }
+}

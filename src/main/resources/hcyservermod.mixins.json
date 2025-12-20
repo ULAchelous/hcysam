@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "io.ula.hcysam.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+      "SoundEngineMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}
