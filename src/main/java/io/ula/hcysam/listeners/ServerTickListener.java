@@ -1,11 +1,13 @@
 package io.ula.hcysam.listeners;
 
+import io.ula.hcysam.OverrideKeys;
 import io.ula.hcysam.server.ScoreBoardHelper;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,10 +15,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
 public class ServerTickListener {
-    private static long dd=0,hh=0,mm=0,ss=0;
-    private static String llddtt;
+
     private static MinecraftServer MC_SERVER_OBJ;
-    private static DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public static void register(){
         ServerTickEvents.START_SERVER_TICK.register(mineraftServer -> {
@@ -36,30 +37,34 @@ public class ServerTickListener {
         });
     }
 
+
     private static void updatePLyerScores(long d,long h,long m,long s,String ldt,MinecraftServer minecraftServer){
         resetPlayerScores(minecraftServer);
         ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(),String.format("§e§l现在时间：§r§c%s",ldt),"dr-sb",5);
-        ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(),String.format("§a距离抽奖开始还有："),"dr-sb",4);
+        ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(), "§a距离抽奖开始还有：","dr-sb",4);
         ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(),String.format("§c§l%d§r§e天",d),"dr-sb",3);
         ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(),String.format("§c§l%d§r§e小时",h),"dr-sb",2);
         ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(),String.format("§c§l%d§r§e分钟",m),"dr-sb",1);
         ScoreBoardHelper.setOrCreateScore(minecraftServer.getScoreboard(),String.format("§c§l%d§r§e秒",s),"dr-sb",0);
-        dd=d;hh=h;mm=m;ss=s;
-        llddtt=ldt;
+        OverrideKeys.SERVERTICK_DD =d;OverrideKeys.SERVERTICK_HH=h;OverrideKeys.SERVERTICK_MM=m;OverrideKeys.SERVERTICK_SS=s;
+        OverrideKeys.SERVERTICK_LDT =ldt;
     }
 
     private static void resetPlayerScores(MinecraftServer minecraftServer){
-        minecraftServer.getScoreboard().resetPlayerScore(String.format("§e§l现在时间：§r§c%s", llddtt),minecraftServer.getScoreboard().getObjective("dr-sb"));
-        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e天",dd),minecraftServer.getScoreboard().getObjective("dr-sb"));
-        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e小时",hh),minecraftServer.getScoreboard().getObjective("dr-sb"));
-        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e分钟",mm),minecraftServer.getScoreboard().getObjective("dr-sb"));
-        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e秒",ss),minecraftServer.getScoreboard().getObjective("dr-sb"));
+        minecraftServer.getScoreboard().resetPlayerScore(String.format("§e§l现在时间：§r§c%s", OverrideKeys.SERVERTICK_LDT),minecraftServer.getScoreboard().getObjective("dr-sb"));
+        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e天",OverrideKeys.SERVERTICK_DD),minecraftServer.getScoreboard().getObjective("dr-sb"));
+        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e小时",OverrideKeys.SERVERTICK_HH),minecraftServer.getScoreboard().getObjective("dr-sb"));
+        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e分钟",OverrideKeys.SERVERTICK_MM),minecraftServer.getScoreboard().getObjective("dr-sb"));
+        minecraftServer.getScoreboard().resetPlayerScore(String.format("§c§l%d§r§e秒",OverrideKeys.SERVERTICK_SS),minecraftServer.getScoreboard().getObjective("dr-sb"));
     }
 
-    public static void sendPlayerTitle(MinecraftServer server, ClientboundSetTitlesPacket.Type type, Component component){
+    public static void sendPlayerTitle(MinecraftServer server, Player player, ClientboundSetTitlesPacket.Type type, Component component){
         Collection<ServerPlayer> serverPlayers = server.getPlayerList().getPlayers();
         for(ServerPlayer serverPlayer: serverPlayers){
-            serverPlayer.connection.send(new ClientboundSetTitlesPacket(type, component));
+            if(serverPlayer.getName().equals(player.getName())) {
+                serverPlayer.connection.send(new ClientboundSetTitlesPacket(type, component));
+                break;
+            }
         }
     }
     public static MinecraftServer getNullableServer(){

@@ -2,15 +2,12 @@ package io.ula.hcysam.listeners;
 
 import io.ula.hcysam.Registry_init;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
-import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.protocol.game.ClientboundSetTitlesPacket;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
@@ -39,6 +36,8 @@ public class PlayerAttackListener {
                         player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,1500,5,false,true,true));
                         player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,1500,255,false,true,true));
                         player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,1500,255,false,true,true));
+                        if(ServerTickListener.getNullableServer() != null)
+                            ServerTickListener.sendPlayerTitle(ServerTickListener.getNullableServer(), player,ClientboundSetTitlesPacket.Type.TITLE,new TextComponent("力竭了...").withStyle(ChatFormatting.DARK_AQUA));
                         return InteractionResult.SUCCESS;
                     }
                     player.playSound(Registry_init.VOICE_XY_3,1,1);
