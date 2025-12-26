@@ -44,12 +44,11 @@ public class Lottery_block extends Block {
                 mainHandItem.setCount(mainHandItem.getCount()-5);
                 lotteryResult.serverBehavior(player,new TextComponent(""));//执行抽奖结果（服务端逻辑）
             }else{
-                MinecraftServer server = ServerTickListener.getNullableServer();
-                if(server != null)
-                    ServerTickListener.sendPlayerTitle(server, player, ClientboundSetTitlesPacket.Type.ACTIONBAR,new TextComponent("用三角券！").withStyle(ChatFormatting.RED));
+                    ServerTickListener.sendPlayerTitle(ServerTickListener.getNullableServer(), ClientboundSetTitlesPacket.Type.ACTIONBAR,new TextComponent("用三角券！").withStyle(ChatFormatting.RED));
             }
             return InteractionResult.CONSUME;
         } else {
+            lotteryResult.clientBehavior(player);
             return InteractionResult.CONSUME;
         }
     }

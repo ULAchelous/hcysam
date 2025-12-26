@@ -4,6 +4,7 @@ import io.ula.hcysam.blocks.Lottery_block;
 import io.ula.hcysam.items.Crystalhaniwa;
 import io.ula.hcysam.effects.XY_Effect;
 import io.ula.hcysam.items.Delta_ticket;
+import io.ula.hcysam.items.OACC_item;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -34,6 +35,8 @@ public class Registry_init {
 
     public static final Crystalhaniwa CRYSTALHANIWA = register("crystalhaniwa", new Crystalhaniwa(Crystalhaniwa.t,1,1f,new FabricItemSettings()));
     public static final Delta_ticket DELTA_TICKET = register("delta_ticket",new Delta_ticket(new FabricItemSettings().maxCount(20)));
+    public static final OACC_item OACC_TICKET_1 = register("oacc_ticket_1",new OACC_item(new FabricItemSettings().maxCount(1),"null"));
+    public static final OACC_item OACC_TICKET_2 = register("oacc_ticket_2",new OACC_item(new FabricItemSettings().maxCount(1),"null"));
     //Items
 
     public static final Lottery_block LOTTERY_BLOCK = register("lottery_block",new Lottery_block(FabricBlockSettings.of(Material.STONE).strength(-1f)),new FabricItemSettings());

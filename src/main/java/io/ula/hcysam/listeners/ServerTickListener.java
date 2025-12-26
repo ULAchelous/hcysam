@@ -8,16 +8,22 @@ import net.minecraft.network.protocol.game.ClientboundSetTitlesPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 
+import static io.ula.hcysam.HCYmod.MOD_ID;
+
 public class ServerTickListener {
 
     private static MinecraftServer MC_SERVER_OBJ;
     private static final DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static void register(){
         ServerTickEvents.START_SERVER_TICK.register(mineraftServer -> {
@@ -65,6 +71,12 @@ public class ServerTickListener {
                 serverPlayer.connection.send(new ClientboundSetTitlesPacket(type, component));
                 break;
             }
+        }
+    }
+    public static void sendPlayerTitle(MinecraftServer server, ClientboundSetTitlesPacket.Type type, Component component){
+        Collection<ServerPlayer> serverPlayers = server.getPlayerList().getPlayers();
+        for(ServerPlayer serverPlayer: serverPlayers){
+            serverPlayer.connection.send(new ClientboundSetTitlesPacket(type, component));
         }
     }
     public static MinecraftServer getNullableServer(){

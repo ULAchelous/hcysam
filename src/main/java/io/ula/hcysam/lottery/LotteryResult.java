@@ -25,8 +25,9 @@ public class LotteryResult {
     public void clientBehavior(Player player){}
     public void serverBehavior(Player player,Component subtitle){
         if(ServerTickListener.getNullableServer() != null){
-            ServerTickListener.sendPlayerTitle(ServerTickListener.getNullableServer(),player, ClientboundSetTitlesPacket.Type.TITLE,new TextComponent("恭喜").withStyle(ChatFormatting.GREEN)
+            ServerTickListener.sendPlayerTitle(ServerTickListener.getNullableServer(), ClientboundSetTitlesPacket.Type.TITLE,new TextComponent("恭喜").withStyle(ChatFormatting.GREEN)
                     .append(new TextComponent("").append(player.getName()).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.BOLD))
+                    .append(new TextComponent("抽中").withStyle(ChatFormatting.GREEN))
                     .append(new TextComponent(NAME).withStyle(ChatFormatting.DARK_AQUA))
             );
             ServerTickListener.sendPlayerTitle(ServerTickListener.getNullableServer(),player, ClientboundSetTitlesPacket.Type.SUBTITLE,subtitle);
