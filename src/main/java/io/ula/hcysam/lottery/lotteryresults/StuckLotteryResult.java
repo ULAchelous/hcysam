@@ -13,7 +13,7 @@ import java.util.*;
 public class StuckLotteryResult extends LotteryResult {
     public static  int nn = new Random().nextInt(60);
     public StuckLotteryResult(long w,String name){
-        super(w,name);
+        super(w,name,true);
     }
 
     public void serverBehavior(Player player, Component subtitle){

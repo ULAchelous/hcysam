@@ -34,7 +34,8 @@ public class Lottery_block extends Block {
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         OverrideKeys.updateKeys();
         ItemStack mainHandItem = player.getMainHandItem();
-        LotteryResult lotteryResult = LotteryEngine.getResult();
+        LotteryResult lotteryResult = LotteryEngine.getResult(player);
+        //LOGGER.info(lotteryResult.getName());
         if (!level.isClientSide) {
             if(player.isHolding(Registry_init.DELTA_TICKET)){
                 if(mainHandItem.getCount() < 5)
