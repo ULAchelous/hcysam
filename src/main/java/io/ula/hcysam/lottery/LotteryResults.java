@@ -13,13 +13,14 @@ import net.minecraft.network.protocol.game.ClientboundSetTitlesPacket;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameType;
 
 import java.util.*;
 
 public class LotteryResults {
     private static ArrayList<LotteryResult> lotteryResults = new ArrayList<>();
-    public static final LotteryResult STUCK_RESULT = new StuckLotteryResult(2,"卡顿");
-    public static final LotteryResult PRIZE_RESULT = new LotteryResult(3,"物品补给",true){
+    public static final LotteryResult STUCK_RESULT = new StuckLotteryResult(3,"卡顿");
+    public static final LotteryResult PRIZE_RESULT = new LotteryResult(5,"物品补给",true){
         @Override
         public void serverBehavior(Player player, Component subtitle) {
             super.serverBehavior(player, subtitle);
@@ -28,7 +29,7 @@ public class LotteryResults {
             player.setItemSlot(EquipmentSlot.OFFHAND,stack);
         }
     };
-    public static final LotteryResult OACC_RESULT = new LotteryResult(2,"§k正版账号",true){
+    public static final LotteryResult OACC_RESULT = new LotteryResult(3,"§k正版账号",true){
         @Override
         public void clientBehavior(Player player) {
             super.clientBehavior(player);
@@ -53,12 +54,27 @@ public class LotteryResults {
             }
         }
     };
-    public static final LotteryResult HANIWA_RESULT = new LotteryResult(3,"水晶植轮",true){
+    public static final LotteryResult HANIWA_RESULT = new LotteryResult(5,"植轮",true){
         @Override
         public void serverBehavior(Player player, Component subtitle) {
             super.serverBehavior(player, subtitle);
             ItemStack stack = new ItemStack(Registry_init.CRYSTALHANIWA,1);
             player.setItemSlot(EquipmentSlot.OFFHAND,stack);
+        }
+    };
+    public static final LotteryResult CREATIVE_RESULT = new LotteryResult(4,"创造",true){
+        @Override
+        public void serverBehavior(Player player, Component subtitle) {
+            int ni = new Random().nextInt(1200);
+            super.serverBehavior(player,new TextComponent("创造模式").withStyle(ChatFormatting.GOLD).append(new TextComponent(String.format("%d",ni)).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD)).append("秒"));
+            player.setGameMode(GameType.CREATIVE);
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player.setGameMode(GameType.SURVIVAL);
+                }
+            },ni*1000);
         }
     };
     public static ArrayList<LotteryResult> createResultsList() {
@@ -67,6 +83,7 @@ public class LotteryResults {
            listAddItem(PRIZE_RESULT);
            listAddItem(HANIWA_RESULT);
            listAddItem(OACC_RESULT);
+           listAddItem(CREATIVE_RESULT);
         return lotteryResults;
     }
     private static void listAddItem(LotteryResult lr){
