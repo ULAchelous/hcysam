@@ -32,7 +32,6 @@ public class Lottery_block extends Block {
     }
 
     public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        OverrideKeys.updateKeys();
         ItemStack mainHandItem = player.getMainHandItem();
         LotteryResult lotteryResult = LotteryEngine.getResult(player);
         //LOGGER.info(lotteryResult.getName());

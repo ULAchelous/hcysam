@@ -1,6 +1,8 @@
 package io.ula.hcysam.lottery;
 
 import io.ula.hcysam.listeners.ServerTickListener;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -28,6 +30,7 @@ public class LotteryResult {
     public String getName(){return NAME;}
     public Boolean isEnabled() {return ENABLED;}
     public void disable() {this.ENABLED = false;}
+    @Environment(EnvType.CLIENT)
     public void clientBehavior(Player player){Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forMusic(SoundEvents.END_PORTAL_SPAWN));}
     public void serverBehavior(Player player,Component subtitle){
         if(ServerTickListener.getNullableServer() != null){
