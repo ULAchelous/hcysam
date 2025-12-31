@@ -24,11 +24,11 @@ public class SoundEngineMixin {
     @Inject(method = "loadLibrary", at = @At("TAIL"))
     @Environment(EnvType.CLIENT)
     private synchronized void loadLibrary(CallbackInfo ci){
-        Minecraft client = Minecraft.getInstance();
-        if(client.getSoundManager() != null) {
-            client.getSoundManager().play(
-                    SimpleSoundInstance.forUI(Registry_init.VOICE_TITLE, 1.0f)
-            );
-        }
+//        Minecraft client = Minecraft.getInstance();
+//        if(client.getSoundManager() != null) {
+//            client.getSoundManager().play(
+//                    SimpleSoundInstance.forUI(Registry_init.VOICE_TITLE, 1.0f)
+//            );
+//        }
     }
 }

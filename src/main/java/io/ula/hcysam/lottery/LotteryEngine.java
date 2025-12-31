@@ -13,7 +13,7 @@ public class LotteryEngine {
             "Kenny_Gu_Gua","_Achelous","Kenny_Gu_Gua"
     };
     private static final String[] OFFLINE_PLAYERS = new String[]{
-            "zyl","LHH","machine","fudima"
+            "zyl","LHH","machine","fudima","lifedownlaodpjy"
     };
     public static LotteryResult getResult(Player player){
         Boolean is_online=false;
