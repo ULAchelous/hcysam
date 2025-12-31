@@ -20,8 +20,8 @@ public class Delta_ticket extends Item {
     }
 
     @Environment(EnvType.CLIENT)
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, level, tooltip, flag);
-        tooltip.add(new TextComponent("限时1天1时4分").withStyle(ChatFormatting.GOLD));
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> list, TooltipFlag flag) {
+        super.appendHoverText(stack, level, list, flag);
+        list.add(new TextComponent("限时1天1时4分").withStyle(ChatFormatting.GOLD));
     }
 }

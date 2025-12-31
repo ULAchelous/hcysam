@@ -3,7 +3,9 @@ package io.ula.hcysam.listeners;
 import io.ula.hcysam.OverrideKeys;
 import io.ula.hcysam.server.ScoreBoardHelper;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Text;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,15 +27,23 @@ public class ServerTickListener {
     private static MinecraftServer MC_SERVER_OBJ;
     private static final DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+    private static Boolean flag=false;
 
     public static void register(){
         ServerTickEvents.START_SERVER_TICK.register(mineraftServer -> {
+            if(flag)
+                return;
             MC_SERVER_OBJ= mineraftServer;
             if(mineraftServer.getTickCount() % 20 == 0){
                 LocalDateTime startTime = LocalDateTime.now();
                 LocalDateTime endTime = LocalDateTime.of(2026,1,1,0,0,0);
-                if(endTime.isBefore(startTime))
+                if(endTime.isBefore(startTime)){
+                    resetPlayerScores(mineraftServer);
+                    sendPlayerTitle(mineraftServer, ClientboundSetTitlesPacket.Type.TITLE,new TextComponent("新年快乐！").withStyle(ChatFormatting.GREEN));
+                    ScoreBoardHelper.setOrCreateScore(mineraftServer.getScoreboard(),"§c新年快乐！","dr-sb",6);
+                    flag=true;
                     return;
+                }
                 updatePLyerScores(ChronoUnit.DAYS.between(startTime,endTime),
                         ChronoUnit.HOURS.between(startTime,endTime)-ChronoUnit.DAYS.between(startTime,endTime)*24,
                         ChronoUnit.MINUTES.between(startTime,endTime)-ChronoUnit.HOURS.between(startTime,endTime)*60,

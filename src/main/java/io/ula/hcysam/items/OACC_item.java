@@ -37,7 +37,7 @@ public class OACC_item extends Item {
     @Override
     public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
         super.appendHoverText(itemStack, level, list, tooltipFlag);
-        list.add(new TextComponent("正版账号ID：").
+        list.add(new TextComponent("ID：").
                 append(new TextComponent(OACC_ID).withStyle(ChatFormatting.GOLD)));
     }
 }
